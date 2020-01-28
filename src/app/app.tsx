@@ -7,19 +7,21 @@ import { Rules } from '../rules/rules';
 const initialState: IScore = {
   player: 0,
   computer: 0,
+  overall: 0,
 };
 
 export default function App() {
   const [score, setStateScore] = React.useState(initialState);
   
   const recordScore = (outcome: Outcomes): void => {
-    if (outcome === Outcomes.Initial || outcome === Outcomes.Tie) {
+    if (outcome === Outcomes.Initial) {
       return;
     }
     
     const newScore: IScore = {
       player: (outcome === Outcomes.PlayerWon) ? score.player + 1 : score.player,
       computer: (outcome === Outcomes.ComputerWon) ? score.computer + 1 : score.computer,
+      overall: score.overall + 1,
     };
     
     setStateScore(newScore);
@@ -27,10 +29,7 @@ export default function App() {
   };
   
   const clearStore = (): void => {
-    const zeroScore = {
-      player: 0,
-      computer: 0,
-    };
+    const zeroScore = { ...initialState };
     
     setStateScore(zeroScore);
     setStorageScore(zeroScore);
@@ -48,6 +47,7 @@ export default function App() {
       <Score
         player={score.player}
         computer={score.computer}
+        overall={score.overall}
         resetScore={clearStore}
       />
       
@@ -59,14 +59,17 @@ export default function App() {
 function getStorageScore(): IScore {
   const player = localStorage.getItem(StorageKeys.Player) || '0';
   const computer = localStorage.getItem(StorageKeys.Computer) || '0';
+  const overall = localStorage.getItem(StorageKeys.Overall) || '0';
   
   return {
     player: Number.parseInt(player),
     computer: Number.parseInt(computer),
+    overall: Number.parseInt(overall),
   }
 }
 
 function setStorageScore(score: IScore): void {
   localStorage.setItem(StorageKeys.Player, score.player.toString());
   localStorage.setItem(StorageKeys.Computer, score.computer.toString());
+  localStorage.setItem(StorageKeys.Overall, score.overall.toString());
 }

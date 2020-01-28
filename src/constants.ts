@@ -1,6 +1,7 @@
 export enum StorageKeys {
   Player = 'rps-player',
   Computer = 'rps-computer',
+  Overall = 'rps-overall',
 }
 
 export enum Values {
