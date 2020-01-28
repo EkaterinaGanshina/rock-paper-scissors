@@ -8,61 +8,51 @@ interface IProps {
 
 interface IState {
   playerChoice: IGameValue | null;
+  computerChoice: IGameValue | null;
   outcome: Outcomes;
 }
 
 const initialState: IState = {
   playerChoice: null,
+  computerChoice: null,
   outcome: Outcomes.Initial,
 };
 
 export class Board extends React.Component<IProps, IState> {
-  private computerChoice: IGameValue = getComputerTurn();
-  
   state: IState = { ...initialState };
   
   render() {
-    const { playerChoice, outcome } = this.state;
+    const { playerChoice, computerChoice, outcome } = this.state;
   
     return (
       <div className="board">
-        {playerChoice == null && (
-          <React.Fragment>
-            <p>Your turn:</p>
-          
-            <GameButton text={GameValues[0].name} handleClick={() => this.makeChoice(GameValues[0])}/>
-            <GameButton text={GameValues[1].name} handleClick={() => this.makeChoice(GameValues[1])}/>
-            <GameButton text={GameValues[2].name} handleClick={() => this.makeChoice(GameValues[2])}/>
-          </React.Fragment>
-        )}
+        <GameButton text={GameValues[0].name} handleClick={() => this.chooseValue(GameValues[0])}/>
+        <GameButton text={GameValues[1].name} handleClick={() => this.chooseValue(GameValues[1])}/>
+        <GameButton text={GameValues[2].name} handleClick={() => this.chooseValue(GameValues[2])}/>
       
-        {playerChoice != null && (
+        {playerChoice != null && computerChoice !== null && (
           <React.Fragment>
-            <p>Your choice: <strong>{playerChoice.name}</strong></p>
-            <p>Computer choice: <strong>{this.computerChoice.name}</strong></p>
+            <p>Your chose: <strong>{playerChoice.name}</strong></p>
+            <p>Computer chose: <strong>{computerChoice.name}</strong></p>
             <p>Outcome: {OutcomeValues[outcome].name}</p>
-            <button type="button" onClick={this.startNewGame}>Play again</button>
           </React.Fragment>
         )}
       </div>
     );
   }
   
-  private makeChoice = (playerChoice: IGameValue) => {
-    const outcome: Outcomes = determineOutcome(playerChoice.value, this.computerChoice.value);
+  private chooseValue = (playerChoice: IGameValue) => {
+    const computerChoice: IGameValue = getComputerTurn();
+    const outcome: Outcomes = determineOutcome(playerChoice.value, computerChoice.value);
     
     this.setState({
       outcome,
       playerChoice,
+      computerChoice,
     });
     
     this.props.recordScore(outcome);
   };
-  
-  private startNewGame = (): void => {
-    this.setState({ ...initialState });
-    this.computerChoice = getComputerTurn();
-  }
 }
 
 function getComputerTurn(): IGameValue {
