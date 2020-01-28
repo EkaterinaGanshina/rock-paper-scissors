@@ -1,15 +1,20 @@
+export enum StorageKeys {
+  Player = 'rps-player',
+  Computer = 'rps-computer',
+}
+
 export enum Values {
   Rock,
   Paper,
   Scissors,
 }
 
-export interface IValue {
+export interface IGameValue {
   value: Values;
   name: string;
 }
 
-export const GameValues: IValue[] = [
+export const GameValues: IGameValue[] = [
   {
     value: Values.Rock,
     name: 'Камень',
@@ -24,9 +29,34 @@ export const GameValues: IValue[] = [
   },
 ];
 
-export const GameOutcomes = {
-  initial: '',
-  draw: 'Ничья',
-  computerWon: 'Компьютер выиграл :(',
-  playerWon: 'Вы выиграли!',
-};
+export enum Outcomes {
+  Initial,
+  Draw,
+  PlayerWon,
+  ComputerWon,
+}
+
+export interface IOutcomeValue {
+  value: Outcomes;
+  name: string;
+}
+
+export const OutcomeValues: IOutcomeValue[] = [
+  {
+    value: Outcomes.Initial,
+    name: '',
+  },
+  {
+    value: Outcomes.Draw,
+    name: 'Ничья',
+  },
+  {
+    value: Outcomes.PlayerWon,
+    name: 'Вы выиграли!',
+  },
+  {
+    value: Outcomes.ComputerWon,
+    name: 'Компьютер выиграл',
+  },
+];
+

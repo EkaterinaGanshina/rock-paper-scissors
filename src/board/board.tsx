@@ -1,53 +1,80 @@
 import * as React from 'react';
-import { IValue, Values, GameValues, GameOutcomes } from '../constants';
+import { GameValues, IGameValue, Outcomes, OutcomeValues, Values } from '../constants';
 import { GameButton } from '../gameButton/gameButton';
 
-export const Board = () => {
-  const [playerChoice, makeChoice] = React.useState<IValue | null>(null);
-  const computerChoice: IValue = getComputerTurn();
-  const outcome: string = playerChoice ? determineOutcome(playerChoice.value, computerChoice.value) : '';
-  
-  return (
-    <div>
-      {!playerChoice && (
-        <React.Fragment>
-          <p>Ваш ход:</p>
-    
-          <GameButton text={GameValues[0].name} handleClick={() => makeChoice(GameValues[0])}/>
-          <GameButton text={GameValues[2].name} handleClick={() => makeChoice(GameValues[2])}/>
-          <GameButton text={GameValues[1].name} handleClick={() => makeChoice(GameValues[1])}/>
-        </React.Fragment>
-      )}
-      
-      {playerChoice && (
-        <React.Fragment>
-          <p>Ваш выбор: <strong>{playerChoice.name}</strong></p>
-          <p>Выбор компьютера: <strong>{computerChoice.name}</strong></p>
-          <p>Результат: {outcome}</p>
-        </React.Fragment>
-      )}
-    </div>
-  );
-};
+interface IProps {
+  recordScore(outcome: Outcomes): void;
+}
 
-function getComputerTurn(): IValue {
+interface IState {
+  playerChoice: IGameValue | null;
+  outcome: Outcomes;
+}
+
+export class Board extends React.Component<IProps, IState> {
+  private readonly computerChoice: IGameValue = getComputerTurn();
+  
+  state: IState = {
+    playerChoice: null,
+    outcome: Outcomes.Initial,
+  };
+  
+  render() {
+    const { playerChoice, outcome } = this.state;
+  
+    return (
+      <div>
+        {playerChoice == null && (
+          <React.Fragment>
+            <p>Your turn:</p>
+          
+            <GameButton text={GameValues[0].name} handleClick={() => this.makeChoice(GameValues[0])}/>
+            <GameButton text={GameValues[1].name} handleClick={() => this.makeChoice(GameValues[1])}/>
+            <GameButton text={GameValues[2].name} handleClick={() => this.makeChoice(GameValues[2])}/>
+          </React.Fragment>
+        )}
+      
+        {playerChoice != null && (
+          <React.Fragment>
+            <p>Your choice: <strong>{playerChoice.name}</strong></p>
+            <p>Computer choice: <strong>{this.computerChoice.name}</strong></p>
+            <p>Outcome: {OutcomeValues[outcome].name}</p>
+          </React.Fragment>
+        )}
+      </div>
+    );
+  }
+  
+  private makeChoice = (playerChoice: IGameValue) => {
+    const outcome: Outcomes = determineOutcome(playerChoice.value, this.computerChoice.value);
+    
+    this.setState({
+      outcome,
+      playerChoice,
+    });
+    
+    this.props.recordScore(outcome);
+  }
+}
+
+function getComputerTurn(): IGameValue {
   const turn: number = Math.floor(Math.random() * 3) + 1;
   return GameValues[turn];
 }
 
-function determineOutcome(player: Values, computer: Values): string {
+function determineOutcome(player: Values, computer: Values): Outcomes {
   if (player === computer) {
-    return GameOutcomes.draw;
+    return Outcomes.Draw;
   }
   
   switch (player) {
     case Values.Rock:
-      return computer === Values.Paper ? GameOutcomes.computerWon : GameOutcomes.playerWon;
+      return computer === Values.Paper ? Outcomes.ComputerWon : Outcomes.PlayerWon;
     case Values.Paper:
-      return computer === Values.Rock ? GameOutcomes.playerWon : GameOutcomes.computerWon;
+      return computer === Values.Rock ? Outcomes.PlayerWon : Outcomes.ComputerWon;
     case Values.Scissors:
-      return computer === Values.Rock ? GameOutcomes.computerWon : GameOutcomes.playerWon;
+      return computer === Values.Rock ? Outcomes.ComputerWon : Outcomes.PlayerWon;
     default:
-      return GameOutcomes.draw;
+      return Outcomes.Draw;
   }
 }
