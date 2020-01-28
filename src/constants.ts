@@ -31,7 +31,7 @@ export const GameValues: IGameValue[] = [
 
 export enum Outcomes {
   Initial,
-  Draw,
+  Tie,
   PlayerWon,
   ComputerWon,
 }
@@ -47,8 +47,8 @@ export const OutcomeValues: IOutcomeValue[] = [
     name: '',
   },
   {
-    value: Outcomes.Draw,
-    name: 'Draw',
+    value: Outcomes.Tie,
+    name: 'Tie',
   },
   {
     value: Outcomes.PlayerWon,

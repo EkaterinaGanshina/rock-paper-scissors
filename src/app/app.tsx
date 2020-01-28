@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Board } from '../board/board';
 import { IScore, Score } from '../score/score';
 import { Outcomes, StorageKeys } from '../constants';
+import { Rules } from '../rules/rules';
 
 const initialState: IScore = {
   player: 0,
@@ -12,7 +13,7 @@ export default function App() {
   const [score, setStateScore] = React.useState(initialState);
   
   const recordScore = (outcome: Outcomes): void => {
-    if (outcome === Outcomes.Initial || outcome === Outcomes.Draw) {
+    if (outcome === Outcomes.Initial || outcome === Outcomes.Tie) {
       return;
     }
     
@@ -49,6 +50,8 @@ export default function App() {
         computer={score.computer}
         resetScore={clearStore}
       />
+      
+      <Rules/>
     </div>
   );
 }

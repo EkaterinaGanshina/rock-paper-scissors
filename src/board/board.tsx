@@ -72,7 +72,7 @@ function getComputerTurn(): IGameValue {
 
 function determineOutcome(player: Values, computer: Values): Outcomes {
   if (player === computer) {
-    return Outcomes.Draw;
+    return Outcomes.Tie;
   }
   
   switch (player) {
@@ -83,6 +83,6 @@ function determineOutcome(player: Values, computer: Values): Outcomes {
     case Values.Scissors:
       return computer === Values.Rock ? Outcomes.ComputerWon : Outcomes.PlayerWon;
     default:
-      return Outcomes.Draw;
+      return Outcomes.Tie;
   }
 }
