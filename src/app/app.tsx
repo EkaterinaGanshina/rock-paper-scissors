@@ -10,7 +10,7 @@ const initialState: IScore = {
   overall: 0,
 };
 
-export default function App() {
+export const App = () => {
   const [score, setStateScore] = React.useState(initialState);
   
   const recordScore = (outcome: Outcomes): void => {
@@ -42,16 +42,23 @@ export default function App() {
   
   return (
     <div className="container">
-      <Board recordScore={recordScore}/>
-  
-      <Score
-        player={score.player}
-        computer={score.computer}
-        overall={score.overall}
-        resetScore={clearStore}
-      />
+      <h1>Rock, paper, scissors</h1>
       
-      <Rules/>
+      <div className="wrapper">
+        <main className="board-container">
+          <Board recordScore={recordScore}/>
+          <Rules/>
+        </main>
+  
+        <aside className="statistics">
+          <Score
+            player={score.player}
+            computer={score.computer}
+            overall={score.overall}
+            resetScore={clearStore}
+          />
+        </aside>
+      </div>
     </div>
   );
 }

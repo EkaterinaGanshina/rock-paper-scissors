@@ -25,7 +25,7 @@ export class Board extends React.Component<IProps, IState> {
     const { playerChoice, outcome } = this.state;
   
     return (
-      <div>
+      <div className="board">
         {playerChoice == null && (
           <React.Fragment>
             <p>Your turn:</p>

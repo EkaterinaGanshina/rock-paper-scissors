@@ -15,14 +15,22 @@ export const Score = (props: IScoreProps) => {
   
   return (
     <div>
-      <p><strong>Overall game score</strong></p>
-      <p>You won: {props.player} times</p>
-      <p>Computer: won {props.computer} times</p>
-      <p>Tie: {ties} times</p>
-      <p>Overall: {props.overall} games</p>
-      <div>
-        <button type="button" onClick={props.resetScore}>Reset score</button>
-      </div>
+      <h3>Overall game score</h3>
+      
+      <ul>
+        <li>You won: {props.player} times</li>
+        <li>Computer: won {props.computer} times</li>
+        <li>Tie: {ties} times</li>
+        <li>Overall: {props.overall} games</li>
+      </ul>
+  
+      <button
+        type="button"
+        className="btn-reset"
+        onClick={props.resetScore}
+      >
+        Reset stats
+      </button>
     </div>
   )
 };
