@@ -17,15 +17,15 @@ export interface IGameValue {
 export const GameValues: IGameValue[] = [
   {
     value: Values.Rock,
-    name: 'Камень',
+    name: 'Rock',
   },
   {
     value: Values.Paper,
-    name: 'Бумага',
+    name: 'Paper',
   },
   {
     value: Values.Scissors,
-    name: 'Ножницы',
+    name: 'Scissors',
   },
 ];
 
@@ -48,15 +48,15 @@ export const OutcomeValues: IOutcomeValue[] = [
   },
   {
     value: Outcomes.Draw,
-    name: 'Ничья',
+    name: 'Draw',
   },
   {
     value: Outcomes.PlayerWon,
-    name: 'Вы выиграли!',
+    name: 'You won!',
   },
   {
     value: Outcomes.ComputerWon,
-    name: 'Компьютер выиграл',
+    name: 'Computer won :(',
   },
 ];
 

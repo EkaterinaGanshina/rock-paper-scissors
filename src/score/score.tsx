@@ -5,9 +5,16 @@ export interface IScore {
   computer: number;
 }
 
-export const Score = (props: IScore) => (
+interface IScoreProps extends IScore {
+  resetScore(): void;
+}
+
+export const Score = (props: IScoreProps) => (
   <div>
-    <p><strong>Общий счет игры</strong></p>
-    <p>Вы {props.player} : {props.computer} Компьютер</p>
+    <p><strong>Overall game score</strong></p>
+    <p>You {props.player} : {props.computer} Computer</p>
+    <div>
+      <button type="button" onClick={props.resetScore}>Reset score</button>
+    </div>
   </div>
 );

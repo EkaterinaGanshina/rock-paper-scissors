@@ -10,6 +10,7 @@ const initialState: IScore = {
 
 export default function App() {
   const [score, setStateScore] = React.useState(initialState);
+  
   const recordScore = (outcome: Outcomes): void => {
     if (outcome === Outcomes.Initial || outcome === Outcomes.Draw) {
       return;
@@ -24,6 +25,16 @@ export default function App() {
     setStorageScore(newScore)
   };
   
+  const clearStore = (): void => {
+    const zeroScore = {
+      player: 0,
+      computer: 0,
+    };
+    
+    setStateScore(zeroScore);
+    setStorageScore(zeroScore);
+  };
+  
   // Get values from local storage (componentDidMount)
   React.useEffect(() => {
     setStateScore(getStorageScore());
@@ -36,6 +47,7 @@ export default function App() {
       <Score
         player={score.player}
         computer={score.computer}
+        resetScore={clearStore}
       />
     </div>
   );

@@ -11,13 +11,15 @@ interface IState {
   outcome: Outcomes;
 }
 
+const initialState: IState = {
+  playerChoice: null,
+  outcome: Outcomes.Initial,
+};
+
 export class Board extends React.Component<IProps, IState> {
-  private readonly computerChoice: IGameValue = getComputerTurn();
+  private computerChoice: IGameValue = getComputerTurn();
   
-  state: IState = {
-    playerChoice: null,
-    outcome: Outcomes.Initial,
-  };
+  state: IState = { ...initialState };
   
   render() {
     const { playerChoice, outcome } = this.state;
@@ -39,6 +41,7 @@ export class Board extends React.Component<IProps, IState> {
             <p>Your choice: <strong>{playerChoice.name}</strong></p>
             <p>Computer choice: <strong>{this.computerChoice.name}</strong></p>
             <p>Outcome: {OutcomeValues[outcome].name}</p>
+            <button type="button" onClick={this.startNewGame}>Play again</button>
           </React.Fragment>
         )}
       </div>
@@ -54,11 +57,16 @@ export class Board extends React.Component<IProps, IState> {
     });
     
     this.props.recordScore(outcome);
+  };
+  
+  private startNewGame = (): void => {
+    this.setState({ ...initialState });
+    this.computerChoice = getComputerTurn();
   }
 }
 
 function getComputerTurn(): IGameValue {
-  const turn: number = Math.floor(Math.random() * 3) + 1;
+  const turn: number = Math.floor(Math.random() * GameValues.length);
   return GameValues[turn];
 }
 
