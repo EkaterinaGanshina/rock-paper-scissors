@@ -6,11 +6,11 @@ export interface IScore {
   overall: number;
 }
 
-interface IScoreProps extends IScore {
+interface IStatsProps extends IScore {
   resetScore(): void;
 }
 
-export const Score = (props: IScoreProps) => {
+export const Statistics = (props: IStatsProps) => {
   const ties = props.overall - props.player - props.computer;
   
   return (
@@ -18,10 +18,10 @@ export const Score = (props: IScoreProps) => {
       <h3>Overall game score</h3>
       
       <ul>
-        <li>You won: {props.player} times</li>
-        <li>Computer: won {props.computer} times</li>
-        <li>Tie: {ties} times</li>
-        <li>Overall: {props.overall} games</li>
+        <li>You won: <strong className="stats-player">{props.player}</strong> times</li>
+        <li>Computer won: <strong className="stats-comp">{props.computer}</strong> times</li>
+        <li>Tie: <strong className="stats-tie">{ties}</strong> times</li>
+        <li>Overall: <strong className="stats-all">{props.overall}</strong> games</li>
       </ul>
   
       <button

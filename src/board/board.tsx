@@ -1,4 +1,7 @@
 import * as React from 'react';
+import rock from './rock.svg';
+import paper from './paper.svg';
+import scissors from './scissors.svg';
 import { GameValues, IGameValue, Outcomes, OutcomeValues, Values } from '../constants';
 import { GameButton } from '../gameButton/gameButton';
 
@@ -26,19 +29,34 @@ export class Board extends React.Component<IProps, IState> {
   
     return (
       <div className="board">
-        <GameButton text={GameValues[0].name} handleClick={() => this.chooseValue(GameValues[0])}/>
-        <GameButton text={GameValues[1].name} handleClick={() => this.chooseValue(GameValues[1])}/>
-        <GameButton text={GameValues[2].name} handleClick={() => this.chooseValue(GameValues[2])}/>
-      
-        {playerChoice != null && computerChoice !== null && (
-          <React.Fragment>
-            <p>Your chose: <strong>{playerChoice.name}</strong></p>
-            <p>Computer chose: <strong>{computerChoice.name}</strong></p>
-            <p>Outcome: {OutcomeValues[outcome].name}</p>
-          </React.Fragment>
-        )}
+        <GameButton
+          text={GameValues[0].name}
+          img={rock}
+          handleClick={() => this.chooseValue(GameValues[0])}
+        />
+        <GameButton
+          text={GameValues[1].name}
+          img={paper}
+          handleClick={() => this.chooseValue(GameValues[1])}
+        />
+        <GameButton
+          text={GameValues[2].name}
+          img={scissors}
+          handleClick={() => this.chooseValue(GameValues[2])}
+        />
+  
+        <ul className="game-outcome">
+          <li>You chose: <strong>{this.getString(playerChoice)}</strong></li>
+          <li>Computer chose: <strong>{this.getString(computerChoice)}</strong></li>
+          <li>Outcome: <strong>{OutcomeValues[outcome].name}</strong></li>
+        </ul>
       </div>
     );
+  }
+  
+  private getString(value: IGameValue | null): string {
+    const noValue = '–';
+    return value ? value.name : noValue;
   }
   
   private chooseValue = (playerChoice: IGameValue) => {

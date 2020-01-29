@@ -45,7 +45,7 @@ export interface IOutcomeValue {
 export const OutcomeValues: IOutcomeValue[] = [
   {
     value: Outcomes.Initial,
-    name: '',
+    name: '–',
   },
   {
     value: Outcomes.Tie,
@@ -60,4 +60,3 @@ export const OutcomeValues: IOutcomeValue[] = [
     name: 'Computer won :(',
   },
 ];
-

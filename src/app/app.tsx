@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Board } from '../board/board';
-import { IScore, Score } from '../score/score';
+import { IScore, Statistics } from '../statistics/statistics';
 import { Outcomes, StorageKeys } from '../constants';
 import { Rules } from '../rules/rules';
 
@@ -47,16 +47,17 @@ export const App = () => {
       <div className="wrapper">
         <main className="board-container">
           <Board recordScore={recordScore}/>
-          <Rules/>
-        </main>
-  
-        <aside className="statistics">
-          <Score
+          
+          <Statistics
             player={score.player}
             computer={score.computer}
             overall={score.overall}
             resetScore={clearStore}
           />
+        </main>
+  
+        <aside className="sidebar">
+          <Rules/>
         </aside>
       </div>
     </div>
