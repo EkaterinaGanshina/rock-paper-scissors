@@ -28,7 +28,7 @@ export const App = () => {
     setStorageScore(newScore)
   };
   
-  const clearStore = (): void => {
+  const clearScore = (): void => {
     const zeroScore = { ...initialState };
     
     setStateScore(zeroScore);
@@ -52,17 +52,17 @@ export const App = () => {
             player={score.player}
             computer={score.computer}
             overall={score.overall}
-            resetScore={clearStore}
+            resetScore={clearScore}
           />
         </main>
   
-        <aside className="sidebar">
+        <aside className="aside">
           <Rules/>
         </aside>
       </div>
     </div>
   );
-}
+};
 
 function getStorageScore(): IScore {
   const player = localStorage.getItem(StorageKeys.Player) || '0';

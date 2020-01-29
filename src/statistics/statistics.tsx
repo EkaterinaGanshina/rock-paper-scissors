@@ -14,7 +14,7 @@ export const Statistics = (props: IStatsProps) => {
   const ties = props.overall - props.player - props.computer;
   
   return (
-    <div>
+    <div className="stats">
       <h3>Overall game score</h3>
       
       <ul>
